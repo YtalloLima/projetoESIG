@@ -1,0 +1,76 @@
+package gerenciador.Model;
+
+import java.util.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="tbl_tarefa")
+public class Tarefa {
+
+	Integer id;
+	
+	String titulo;
+	
+	String descricao;
+	
+	Date data;
+	
+	String prioridade;
+	
+	Responsavel resp;
+	
+	
+	public Responsavel getResp() {
+		return resp;
+	}
+
+	public void setResp(Responsavel resp) {
+		this.resp = resp;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public Date getData() {
+		return data;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
+	}
+
+	public String getPrioridade() {
+		return prioridade;
+	}
+
+	public void setPrioridade(String prioridade) {
+		this.prioridade = prioridade;
+	}
+
+	
+	
+
+}

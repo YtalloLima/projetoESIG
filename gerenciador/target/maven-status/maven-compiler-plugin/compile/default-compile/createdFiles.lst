@@ -1,0 +1,8 @@
+gerenciador\Controller\TarefaBean.class
+gerenciador\Model\Prioridade.class
+gerenciador\Utils\JPAUtil.class
+gerenciador\DAO\TarefaDao.class
+gerenciador\Model\Tarefa.class
+gerenciador\Model\Responsavel.class
+gerenciador\Model\Situacao.class
+gerenciador\DAO\DaoGeneric.class

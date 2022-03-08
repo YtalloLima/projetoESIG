@@ -1,0 +1,19 @@
+package gerenciadorTarefasESIG.Model;
+
+import java.util.Date;
+
+public class Tarefa {
+	
+	Integer id;
+	
+	String titulo;
+	
+	String descricao;
+	
+	Date data;
+	
+	String prioridade;
+	
+	
+
+}

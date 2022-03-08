@@ -1,0 +1,135 @@
+package gerenciador.Controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
+
+import gerenciador.DAO.DaoGeneric;
+import gerenciador.DAO.TarefaDao;
+import gerenciador.Model.Prioridade;
+import gerenciador.Model.Responsavel;
+import gerenciador.Model.Situacao;
+import gerenciador.Model.Tarefa;
+
+@ManagedBean(name = "tarefaBean")
+@SessionScoped
+public class TarefaBean {
+
+
+	private Tarefa tarefa = new Tarefa();
+
+//	private DaoGeneric<Tarefa> daoGeneric = new DaoGeneric<Tarefa>();
+
+	private DaoGeneric<Tarefa> daoGeneric = new DaoGeneric<Tarefa>();
+	
+	private List<Tarefa> tarefas;
+	
+	private Integer idTarefa = null;
+
+	public static final String CADASTRO = "cadastro";
+	public static final String LISTA = "lista";
+
+	@PostConstruct
+	private void init() {
+		tarefa = new Tarefa();
+		tarefa.setPrioridade(new Prioridade());
+		tarefa.setResponsavel(new Responsavel());
+		tarefa.setSituacao(new Situacao());
+	}
+
+	public String iniciarCadastro() {
+		init();
+//		setDescricaoOperacao("Cadastrar");
+		return CADASTRO;
+	}
+
+	public String salvar() {
+		System.out.println(tarefa.getTitulo());
+
+		Responsavel resp = new Responsavel();
+		resp.setNome(tarefa.getTitulo());
+		tarefa.setSituacao(new Situacao(Situacao.EM_ANDAMENTO));
+		tarefa.setAtivo(true);
+		daoGeneric.salvar(tarefa);
+		addMensagemInfo("Tarefa criada com sucesso!");
+		return "";
+	}
+	
+	public String listar() {
+		init();
+		tarefa.setSituacao(new Situacao(Situacao.EM_ANDAMENTO));
+		return buscar();
+	}
+	
+	public String buscar(){
+		TarefaDao dao = new TarefaDao();
+		tarefas = dao.findByParametros(tarefa.getTitulo(), idTarefa, tarefa.getSituacao().getId(), tarefa.getResponsavel());
+		return LISTA;
+	}
+
+	public List<SelectItem> getResponsaveis() {
+		DaoGeneric<Responsavel> dao = new DaoGeneric<>();
+		List<Responsavel> responsaveis = dao.findAll(Responsavel.class);
+		List<SelectItem> lista = new ArrayList<>();
+
+		responsaveis.forEach(resp -> lista.add(new SelectItem(resp.getId(), resp.getNome())));
+
+		return lista;
+	}
+
+	public List<SelectItem> getPrioridades() {
+		DaoGeneric<Prioridade> dao = new DaoGeneric<>();
+		List<Prioridade> prioridades = dao.findAll(Prioridade.class);
+		List<SelectItem> lista = new ArrayList<>();
+
+		prioridades.forEach(priori -> lista.add(new SelectItem(priori.getId(), priori.getNome())));
+
+		return lista;
+	}
+
+	public List<SelectItem> getSituacoes() {
+		DaoGeneric<Situacao> dao = new DaoGeneric<>();
+		List<Situacao> situacoes = dao.findAll(Situacao.class);
+		List<SelectItem> lista = new ArrayList<>();
+
+		situacoes.forEach(sit -> lista.add(new SelectItem(sit.getId(), sit.getNome())));
+
+		return lista;
+	}
+
+	public Tarefa getTarefa() {
+		return tarefa;
+	}
+
+	public void setTarefa(Tarefa tarefa) {
+		this.tarefa = tarefa;
+	}
+
+	public Integer getIdTarefa() {
+		return idTarefa;
+	}
+
+	public void setIdTarefa(Integer idTarefa) {
+		this.idTarefa = idTarefa;
+	}
+
+	public List<Tarefa> getTarefas() {
+		return tarefas;
+	}
+
+	public void setTarefas(List<Tarefa> tarefas) {
+		this.tarefas = tarefas;
+	}
+	
+	public static void addMensagemInfo(String mensagem){
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, mensagem, ""));
+	}
+}

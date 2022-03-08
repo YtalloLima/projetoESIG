@@ -1,0 +1,5 @@
+package gerenciador.Model;
+
+public class Situacao {
+
+}

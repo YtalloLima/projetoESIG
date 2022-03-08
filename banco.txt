@@ -1,0 +1,40 @@
+CREATE TABLE tbl_prioridade (
+ id_prioridade integer CONSTRAINT pk_id_prioridade PRIMARY KEY,
+ nome varchar(70) NOT NULL
+);
+
+insert into tbl_prioridade values(1,'Alta');
+insert into tbl_prioridade values(2,'Média');
+insert into tbl_prioridade values(3,'Baixa');
+
+CREATE TABLE tbl_situacao (
+ id_situacao integer CONSTRAINT pk_id_situacao PRIMARY KEY,
+ nome varchar(70) NOT NULL
+);
+
+insert into tbl_situacao values(1,'Em andamento');
+insert into tbl_situacao values(2,'Concluída');
+
+CREATE TABLE tbl_responsavel (
+ id_responsavel integer CONSTRAINT pk_id_responsavel PRIMARY KEY,
+ nome varchar(70) NOT NULL,
+ data_nasc date NOT NULL
+);
+
+insert into tbl_responsavel values(1,'João','1989-10-15');
+insert into tbl_responsavel values(2,'Paulo','1993-03-25');
+insert into tbl_responsavel values(3,'Maria','1995-04-02');
+
+CREATE TABLE tbl_tarefa (
+ id_tarefa SERIAL CONSTRAINT pk_id_tarefa PRIMARY KEY,
+ titulo varchar(50) NOT NULL,
+ descricao varchar(500) NOT NULL,
+ data date NOT NULL,
+ ativo boolean NOT NULL,
+ id_responsavel integer,	
+ id_situacao integer,
+ id_prioridade integer,
+ FOREIGN KEY (id_responsavel) REFERENCES tbl_responsavel (id_responsavel) ON DELETE CASCADE,
+ FOREIGN KEY (id_situacao) REFERENCES tbl_situacao (id_situacao) ON DELETE CASCADE,
+ FOREIGN KEY (id_prioridade) REFERENCES tbl_prioridade (id_prioridade) ON DELETE CASCADE
+);

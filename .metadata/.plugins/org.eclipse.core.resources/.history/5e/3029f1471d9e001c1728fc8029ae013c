@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Insert title here</title>
+</h:head>
+<h:body>
+	<h:form>
+		<div align="center">
+			<table>
+				<tr>
+					<td>Título:</td>
+					<td><h:inputText value="#{tarefaBean.tarefa.titulo}" size="53" /></td>
+				</tr>
+				<tr>
+					<td>Descrição:</td>
+					<td><h:inputTextarea value="#{tarefaBean.tarefa.descricao}"
+							cols="50" rows="20" /></td>
+				</tr>
+				<tr>
+				<table>
+				<tr>
+					<td>Responsáveis:</td>
+					<td><h:selectOneMenu
+							value="#{tarefaBean.tarefa.responsavel.id}">
+							<f:selectItem itemValue="0" itemLabel="Selecione" />
+							<f:selectItems value="#{tarefaBean.responsaveis}" />
+						</h:selectOneMenu></td>
+				</tr>
+				<tr>
+					<td>Prioridade:</td>
+					<td><h:selectOneMenu
+							value="#{tarefaBean.tarefa.prioridade.id}">
+							<f:selectItem itemValue="0" itemLabel="Selecione" />
+							<f:selectItems value="#{tarefaBean.prioridades}" />
+						</h:selectOneMenu></td>
+				</tr>
+				</table>
+				</tr>
+
+				<tr>
+					<td><h:commandButton value="Enviar"
+							action="#{tarefaBean.salvar}" /></td>
+				</tr>
+			</table>
+		</div>
+	</h:form>
+</h:body>
+</html>

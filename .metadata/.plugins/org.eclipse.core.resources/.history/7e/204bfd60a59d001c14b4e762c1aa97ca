@@ -1,0 +1,5 @@
+package gerenciador.Utils;
+
+public class JPAUtil {
+
+}
